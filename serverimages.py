@@ -28,4 +28,5 @@ def upload_file():
     filename = "{}{}".format(name, ext)
     image = os.path.join(app.config['UPLOAD_FOLDER'], filename)
     file.save(image)
+    labels, probs = PredictTop5(image, model='Alexnet')
     return 'OK'
