@@ -1,8 +1,9 @@
 import os
 from flask import Flask, render_template, request
+from flask import jsonify,json
 from werkzeug import secure_filename
 from datetime import datetime
-
+from PretrainedModels.pretrained_cnns import PredictTop5
 app = Flask(__name__)
 
 UPLOAD_FOLDER = os.path.basename('uploads')
@@ -28,5 +29,6 @@ def upload_file():
     filename = "{}{}".format(name, ext)
     image = os.path.join(app.config['UPLOAD_FOLDER'], filename)
     file.save(image)
-    labels, probs = PredictTop5(image, model='Alexnet')
-    return 'OK'
+    results = PredictTop5(image_path=image, model_name='VGG19')
+    jsonStr = json.dumps(results)
+    return jsonStr
