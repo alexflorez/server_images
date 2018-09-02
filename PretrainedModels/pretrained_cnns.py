@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import tensorflow as tf
+from keras import backend as K
 from keras.applications.vgg19 import VGG19
 from keras.preprocessing import image
 from keras.applications.vgg19 import preprocess_input, decode_predictions
@@ -17,7 +18,8 @@ def PredictTop5_VGG19(image_path):
     x = np.expand_dims(x, axis=0)
     x = preprocess_input(x)
     preds = model.predict(x)
-    labels = decode_predictions(preds, top=5 )
+    labels = decode_predictions(preds, top=5)
+    K.clear_session()
     labels = np.array(labels)
     labels = np.squeeze(labels)
     labels = labels[:,1:3]
