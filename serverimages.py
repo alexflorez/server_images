@@ -1,7 +1,8 @@
 import os
 from flask import Flask, render_template, request
 from flask import jsonify,json
-from werkzeug import secure_filename
+from flask_cors import CORS
+from werkzeug.utils import secure_filename
 from datetime import datetime
 from PretrainedModels.pretrained_cnns import PredictTop5
 app = Flask(__name__)
@@ -10,6 +11,8 @@ UPLOAD_FOLDER = os.path.basename('uploads')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
+
+CORS(app, expose_headers='Authorization')
 
 def name_imgs():
     prefix = 'IMG'

@@ -1,15 +1,14 @@
-# -*- coding: utf-8 -*-
-
 import tensorflow as tf
-from keras import backend as K
-from keras.applications.vgg19 import VGG19
-from keras.preprocessing import image
-from keras.applications.vgg19 import preprocess_input, decode_predictions
+from tensorflow.keras import backend as K
+from tensorflow.keras.applications.vgg19 import VGG19
+from tensorflow.keras.preprocessing import image
+from tensorflow.keras.applications.vgg19 import preprocess_input, decode_predictions
 import numpy as np
-config = tf.ConfigProto()
-config.gpu_options.allow_growth=True
-sess = tf.Session(config=config)
 
+gpus = tf.config.experimental.list_physical_devices('GPU')
+for gpu in gpus:
+    tf.config.experimental.set_memory_growth(gpu, True)
+    
 
 def PredictTop5_VGG19(image_path):
     model = VGG19()
